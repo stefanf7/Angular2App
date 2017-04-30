@@ -1,0 +1,32 @@
+<div class="login jumbotron center-block  col-md-6 container" >
+  <h1 class="col-md-offset-4">Login</h1>
+
+  <form role="form" (submit)="login(username.value, password.value)">
+    <div class="form-group">
+      <label for="username">Email Address</label>
+
+      <div class="input-group input-group-lg">
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-envelope"></span>
+        </span>
+        <input type="text" #username class="form-control" id="username" placeholder="Email Address" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <div class="input-group input-group-lg">
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-lock"></span>
+        </span>
+        <input type="password" #password class="form-control" id="password" placeholder="Password" required>
+      </div>
+    </div>
+
+    
+
+    <button type="submit" class="btn btn-default">Submit</button>
+    <a routerLink="/api/signup"  routerLinkActive="active">Sign up</a>
+  </form>
+
+  <span>{{errorMsg}}</span>
+</div>

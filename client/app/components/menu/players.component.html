@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div><button class="btn btndefault" routerLink="/api/home">Back</button>
+</div>
+
+<div class="container">
+
+  <input  type="text" #filterByPlayerName name="filterByPlayerName" placeholder="Filter by Player Name" (keyup)="0">  
+
+  <input type="text" #filterByPlayerLastName name="filterByPlayerLastName" placeholder="Filter by Player Last Name" (keyup)="0">  
+
+  <input type="text" #filterByPlayerGoals name="filterByPlayerGoals" placeholder="Min. nr. of Goals" (keyup)="0">   
+
+  <input type="text" #filterByPlayerValue name="filterByPlayerValue" placeholder="Max. player value" (keyup)="0"> 
+
+  <select #filterByPlayerPosition (click)="0">
+    <option *ngFor="let p of positions" value="{{p.id}}" >{{p.name}}</option>
+  </select>
+
+  
+
+  <div>
+    <table class="table table-hover col-sm-6" style="width:75%">
+      <thead >
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th><button class="btn btn-default" (click)="sortByGoals()">Goals</button></th>
+          <th><button class="btn btn-default" (click)="sortByValue()">Value</button></th>
+          <th>Position</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr [ngClass]="{'text-primary' : myTeamIds.indexOf(player.id) >= 0}" *ngFor="let player of players | 
+            filterByName:
+            filterByPlayerName.value:
+            filterByPlayerLastName.value:
+            filterByPlayerGoals.value: 
+            filterByPlayerValue.value:
+            filterByPlayerPosition.value:
+            sortAscByValue:
+            sortAscByGoals
+            ">
+          
+          <td class="col-sm-1">{{player.first_name}}</td>
+          <td class="col-sm-1">{{player.second_name}}</td>
+          <td class="col-sm-1">{{player.goals_scored}}</td>
+          <td class="col-sm-1">{{player.now_cost}}</td>
+          <td class="col-sm-1">
+            <div *ngIf="player.element_type==1;">Goalkeeper</div>
+            <div *ngIf="player.element_type==2;">Defender</div>
+            <div *ngIf="player.element_type==3;">Midfielder</div>
+            <div *ngIf="player.element_type==4;">Forward</div>
+          </td>
+          <button class="btn btn-default" (click)="addPlayerInMyTeam(player)">Add</button>
+          <button [ngClass]="{'hidden' : myTeamIds.indexOf(player.id) < 0}" class="btn btn-default" (click)="removePlayerFromMyTeam(player)">Remove</button>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+
+    <table class="table table-hover" style="width:25%">
+      <thead >
+        <tr>
+          <th>Goalkeepers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of myTeam">
+          <td class="col-sm-1" *ngIf="player.element_type==1;">{{player.first_name}} {{player.second_name}}</td>
+         
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-hover" style="width:25%">
+      <thead >
+        <tr>
+          <th>Defenders</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of myTeam">
+          <td class="col-sm-1" *ngIf="player.element_type==2;">{{player.first_name}} {{player.second_name}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-hover" style="width:25%">
+      <thead >
+        <tr>
+          <th>Midfielders</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of myTeam">
+          <td class="col-sm-1" *ngIf="player.element_type==3;">{{player.first_name}} {{player.second_name}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-hover" style="width:25%">
+      <thead >
+        <tr>
+          <th>Forwards</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of myTeam">
+          <td class="col-sm-4" *ngIf="player.element_type==4;">{{player.first_name}} {{player.second_name}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <span>Left Budget: <strong>{{budget}}</strong></span>
+      <button (click)="saveSquad()">Save Squad</button>
+    </div>
+  </div>
+
+
+
+
+
+</div>
+
+</body>
+</html>
